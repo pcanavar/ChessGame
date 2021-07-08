@@ -7,9 +7,15 @@ namespace Xadres
     {
         static void Main(string[] args)
         {
-            Posicao P = new Posicao(3, 4);
-
-
+            Board tab = new Board(8, 8);
+            
+            
+            
+            
+            
+            
+            
+            Console.ReadLine();
 
 
 
