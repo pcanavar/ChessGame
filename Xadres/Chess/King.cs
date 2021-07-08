@@ -6,7 +6,6 @@ namespace Chess
     {
         public King (Board board, Colour colour) : base(colour, board)
         {
-
         }
         public override string ToString()
         {
