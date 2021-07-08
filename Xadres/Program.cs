@@ -8,13 +8,23 @@ namespace Xadres
     {
         static void Main(string[] args)
         {
-            ChessPosition pos = new ChessPosition('a', 1);
-            Console.WriteLine(pos);
-            Console.WriteLine(pos.ToPosition());
+            try
+            {
+                Board tab = new Board(8, 8);
+                tab.PlacePiece(new Rook(tab, Colour.White), new Position(0, 0));
+                tab.PlacePiece(new Rook(tab, Colour.White), new Position(1, 3));
+                tab.PlacePiece(new King(tab, Colour.White), new Position(2, 4));
+                tab.PlacePiece(new King(tab, Colour.Black), new Position(5, 4));
+                tab.PlacePiece(new Rook(tab, Colour.Black), new Position(6, 3));
+
+                Screen.PrintBoard(tab);
 
 
-
-
+            }
+            catch (BoardException e)
+            {
+                Console.WriteLine(e.Message); 
+            }
 
             Console.ReadLine();
         }
