@@ -14,5 +14,9 @@
             Board = board;
             MovementsNo = 0;
         }
+        public void IncreaseMovementNo()
+        {
+            MovementsNo++;
+        }
     }
 }

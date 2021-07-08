@@ -10,14 +10,20 @@ namespace Xadres
         {
             try
             {
-                Board tab = new Board(8, 8);
-                tab.PlacePiece(new Rook(tab, Colour.White), new Position(0, 0));
-                tab.PlacePiece(new Rook(tab, Colour.White), new Position(1, 3));
-                tab.PlacePiece(new King(tab, Colour.White), new Position(2, 4));
-                tab.PlacePiece(new King(tab, Colour.Black), new Position(5, 4));
-                tab.PlacePiece(new Rook(tab, Colour.Black), new Position(6, 3));
+                ChessMatch Match = new ChessMatch();
+                
+                while (!Match.Finished)
+                {
+                    Console.Clear();
+                    Screen.PrintBoard(Match.Board);
+                    Console.WriteLine();
+                    Console.Write("Origem: ");
+                    Position origin = Screen.ReadPositionChess().ToPosition();
+                    Console.Write("Destino: ");
+                    Position destination = Screen.ReadPositionChess().ToPosition();
 
-                Screen.PrintBoard(tab);
+                    Match.NewMovement(origin, destination);
+                }
 
 
             }
