@@ -88,12 +88,40 @@ namespace Chess
         }
         private void PlacePieces()
         {
-            PlaceNewPiece('h', 7, new Rook(Board, Colour.White));
-            PlaceNewPiece('c', 1, new Rook(Board, Colour.White));
-            PlaceNewPiece('d', 1, new King(Board, Colour.White));
+            PlaceNewPiece('a', 1, new Rook(Board, Colour.White));
+            PlaceNewPiece('b', 1, new Knight(Board, Colour.White));
+            PlaceNewPiece('c', 1, new Bishop(Board, Colour.White));
+            PlaceNewPiece('d', 1, new Queen(Board, Colour.White));
+            PlaceNewPiece('e', 1, new King(Board, Colour.White));
+            PlaceNewPiece('f', 1, new Bishop(Board, Colour.White));
+            PlaceNewPiece('g', 1, new Knight(Board, Colour.White));
+            PlaceNewPiece('h', 1, new Rook(Board, Colour.White));
+            PlaceNewPiece('a', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('b', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('c', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('d', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('e', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('f', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('g', 2, new Pawn(Board, Colour.White));
+            PlaceNewPiece('h', 2, new Pawn(Board, Colour.White));
 
-            PlaceNewPiece('a', 8, new King(Board, Colour.Black));
-            PlaceNewPiece('b', 8, new Rook(Board, Colour.Black));
+            PlaceNewPiece('a', 8, new Rook(Board, Colour.Black));
+            PlaceNewPiece('b', 8, new Knight(Board, Colour.Black));
+            PlaceNewPiece('c', 8, new Bishop(Board, Colour.Black));
+            PlaceNewPiece('d', 8, new Queen(Board, Colour.Black));
+            PlaceNewPiece('e', 8, new King(Board, Colour.Black));
+            PlaceNewPiece('f', 8, new Bishop(Board, Colour.Black));
+            PlaceNewPiece('g', 8, new Knight(Board, Colour.Black));
+            PlaceNewPiece('h', 8, new Rook(Board, Colour.Black));
+            PlaceNewPiece('a', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('b', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('c', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('d', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('e', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('f', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('g', 7, new Pawn(Board, Colour.Black));
+            PlaceNewPiece('h', 7, new Pawn(Board, Colour.Black));
+
         }
         public Pieces NewMovement(Position origin, Position destination)
         {
