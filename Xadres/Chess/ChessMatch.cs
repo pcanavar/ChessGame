@@ -54,6 +54,33 @@ namespace Chess
             }
             return false;
         }
+        public bool IsCheckMate(Colour colour)
+        {
+            if (!IsCheckStatus(colour)) { return false; }
+            foreach (Pieces piece in GetPiecesInGame(colour))
+            {
+                bool[,] mat = piece.PossibleMovements();
+                for (int i = 0; i < Board.Lines; i++)
+                {
+                    for (int j = 0; j < Board.Columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = piece.Position;
+                            Position destination = new Position(i, j);
+                            Pieces captured = NewMovement(origin, destination);
+                            bool isCheck = IsCheckStatus(colour);
+                            UndoMovement(origin, destination, captured);
+                            if (!isCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         public void PlaceNewPiece(char column, int line, Pieces piece)
         {
             Board.PlacePiece(piece, new ChessPosition(column, line).ToPosition());
@@ -61,19 +88,12 @@ namespace Chess
         }
         private void PlacePieces()
         {
+            PlaceNewPiece('h', 7, new Rook(Board, Colour.White));
             PlaceNewPiece('c', 1, new Rook(Board, Colour.White));
-            PlaceNewPiece('c', 2, new Rook(Board, Colour.White));
-            PlaceNewPiece('d', 2, new Rook(Board, Colour.White));
-            PlaceNewPiece('e', 1, new Rook(Board, Colour.White));
-            PlaceNewPiece('e', 2, new Rook(Board, Colour.White));
             PlaceNewPiece('d', 1, new King(Board, Colour.White));
 
-            PlaceNewPiece('c', 7, new Rook(Board, Colour.Black));
-            PlaceNewPiece('c', 8, new Rook(Board, Colour.Black));
-            PlaceNewPiece('d', 7, new Rook(Board, Colour.Black));
-            PlaceNewPiece('e', 7, new Rook(Board, Colour.Black));
-            PlaceNewPiece('e', 8, new Rook(Board, Colour.Black));
-            PlaceNewPiece('d', 8, new King(Board, Colour.Black));
+            PlaceNewPiece('a', 8, new King(Board, Colour.Black));
+            PlaceNewPiece('b', 8, new Rook(Board, Colour.Black));
         }
         public Pieces NewMovement(Position origin, Position destination)
         {
@@ -115,8 +135,8 @@ namespace Chess
                 throw new BoardException("You cannot place yourself in check");
             }
             if (IsCheckStatus(EnemyColour(CurrentPlayer))) { Check = true; } else { Check = false; }
-            Turn++;
-            ChangePlayer();
+            if (IsCheckMate(EnemyColour(CurrentPlayer))) { Finished = true; }
+            else { Turn++; ChangePlayer(); }
         }
         public void UndoMovement(Position origin, Position destination, Pieces captured)
         {

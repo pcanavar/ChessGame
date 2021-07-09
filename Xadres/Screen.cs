@@ -14,8 +14,16 @@ namespace Xadres
             PrintCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.Turn);
-            Console.WriteLine("Waiting Play from: " + match.CurrentPlayer);
-            if (match.Check) { Console.WriteLine("Check !"); }
+            if (!match.Finished)
+            {
+                Console.WriteLine("Waiting Play from: " + match.CurrentPlayer);
+                if (match.Check) { Console.WriteLine("Check !"); }
+            }
+            else
+            {
+                Console.WriteLine("CHECKMATE !");
+                Console.WriteLine("Winner is: " + match.CurrentPlayer);
+            }
         }
         public static void PrintCapturedPieces(ChessMatch match)
         {
@@ -46,7 +54,7 @@ namespace Xadres
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < board.Columns; j++)
                 {
-                    PrintPieces(board.Piece(i, j)); 
+                    PrintPieces(board.Piece(i, j));
                 }
                 Console.WriteLine();
             }
@@ -62,7 +70,7 @@ namespace Xadres
                 Console.Write(8 - i + " ");
                 for (int j = 0; j < board.Columns; j++)
                 {
-                    if (possibleMovements[i, j]){Console.BackgroundColor = ConsoleColor.DarkGray;}
+                    if (possibleMovements[i, j]) { Console.BackgroundColor = ConsoleColor.DarkGray; }
                     else { Console.BackgroundColor = original; }
                     PrintPieces(board.Piece(i, j));
                     Console.BackgroundColor = original;

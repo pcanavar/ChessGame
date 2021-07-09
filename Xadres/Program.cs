@@ -14,47 +14,38 @@ namespace Xadres
 
                 while (!Match.Finished)
                 {
-                    try
-                    {
+                    Console.Clear();
+                    Screen.PrintMatch(Match);
 
-                        Console.Clear();
-                        Screen.PrintMatch(Match);
+                    Console.WriteLine();
+                    Console.Write("Origin: ");
+                    Position origin = Screen.ReadPositionChess().ToPosition();
+                    Match.ValidatePositionOrigin(origin);
+                    bool[,] possibleMoviments = Match.Board.Piece(origin).PossibleMovements();
+                    Console.Clear();
+                    Screen.PrintBoard(Match.Board, possibleMoviments);
 
-                        Console.WriteLine();
-                        Console.Write("Origin: ");
-                        Position origin = Screen.ReadPositionChess().ToPosition();
-                        Match.ValidatePositionOrigin(origin);
-                        bool[,] possibleMoviments = Match.Board.Piece(origin).PossibleMovements();
-                        Console.Clear();
-                        Screen.PrintBoard(Match.Board, possibleMoviments);
+                    Console.WriteLine();
+                    Console.Write("Destination: ");
+                    Position destination = Screen.ReadPositionChess().ToPosition();
+                    Match.ValidatePositionDestination(origin, destination);
 
-                        Console.WriteLine();
-                        Console.Write("Destination: ");
-                        Position destination = Screen.ReadPositionChess().ToPosition();
-                        Match.ValidatePositionDestination(origin, destination);
-
-                        Match.RunPlay(origin, destination);
-                    }
-                    catch(BoardException bEx)
-                    {
-                        Console.WriteLine(bEx.Message);
-                        Console.ReadLine();
-                    }
-                    catch(Exception e)
-                    {
-                        Console.WriteLine("Unknown Exception: " + e.Message);
-                        Console.ReadLine();
-                    }
+                    Match.RunPlay(origin, destination);
                 }
-
-
+                Console.Clear();
+                Screen.PrintMatch(Match);
+                Console.ReadLine();
             }
-            catch (BoardException e)
+            catch (BoardException bEx)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(bEx.Message);
+                Console.ReadLine();
             }
-
-            Console.ReadLine();
+            catch (Exception e)
+            {
+                Console.WriteLine("Unknown Exception: " + e.Message);
+                Console.ReadLine();
+            }
         }
     }
 }
