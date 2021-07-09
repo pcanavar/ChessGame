@@ -121,7 +121,7 @@ namespace Chess
         }
         public void ValidatePositionDestination(Position origin, Position destination)
         {
-            if (!Board.Piece(origin).IsAbleToMoveTo(destination))
+            if (!Board.Piece(origin).PossibleMovement(destination))
             {
                 throw new BoardException("This piece cannot move to the destination selected");
             }
