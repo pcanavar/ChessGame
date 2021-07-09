@@ -18,6 +18,10 @@
         {
             MovementsNo++;
         }
+        public void DecreaseMovementNo()
+        {
+            MovementsNo--;
+        }
         public bool IsPossibleMovementsAvailable()
         {
             bool[,] mat = PossibleMovements();

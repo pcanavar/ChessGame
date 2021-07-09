@@ -15,6 +15,7 @@ namespace Xadres
             Console.WriteLine();
             Console.WriteLine("Turn: " + match.Turn);
             Console.WriteLine("Waiting Play from: " + match.CurrentPlayer);
+            if (match.Check) { Console.WriteLine("Check !"); }
         }
         public static void PrintCapturedPieces(ChessMatch match)
         {

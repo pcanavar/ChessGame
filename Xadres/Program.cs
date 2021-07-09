@@ -21,7 +21,7 @@ namespace Xadres
                         Screen.PrintMatch(Match);
 
                         Console.WriteLine();
-                        Console.Write("Origem: ");
+                        Console.Write("Origin: ");
                         Position origin = Screen.ReadPositionChess().ToPosition();
                         Match.ValidatePositionOrigin(origin);
                         bool[,] possibleMoviments = Match.Board.Piece(origin).PossibleMovements();
@@ -29,7 +29,7 @@ namespace Xadres
                         Screen.PrintBoard(Match.Board, possibleMoviments);
 
                         Console.WriteLine();
-                        Console.Write("Destino: ");
+                        Console.Write("Destination: ");
                         Position destination = Screen.ReadPositionChess().ToPosition();
                         Match.ValidatePositionDestination(origin, destination);
 
