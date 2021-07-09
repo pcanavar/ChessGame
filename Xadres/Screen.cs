@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using board;
 using Chess;
 
@@ -6,6 +7,37 @@ namespace Xadres
 {
     class Screen
     {
+        public static void PrintMatch(ChessMatch match)
+        {
+            Screen.PrintBoard(match.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turn: " + match.Turn);
+            Console.WriteLine("Waiting Play from: " + match.CurrentPlayer);
+        }
+        public static void PrintCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Captured Pieces: ");
+            Console.Write("Whites: ");
+            PrintSet(match.GetCapturedPieces(Colour.White));
+            Console.WriteLine();
+            Console.Write("Blacks: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            PrintSet(match.GetCapturedPieces(Colour.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+        public static void PrintSet(HashSet<Pieces> set)
+        {
+            Console.Write("[");
+            foreach (Pieces piece in set)
+            {
+                Console.Write(piece + " ");
+            }
+            Console.Write("]");
+        }
         public static void PrintBoard(Board board)
         {
             for (int i = 0; i < board.Lines; i++)

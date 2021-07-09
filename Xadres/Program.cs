@@ -18,10 +18,7 @@ namespace Xadres
                     {
 
                         Console.Clear();
-                        Screen.PrintBoard(Match.Board);
-                        Console.WriteLine();
-                        Console.WriteLine("Turn: " + Match.Turn);
-                        Console.WriteLine("Waiting Play from: " + Match.CurrentPlayer);
+                        Screen.PrintMatch(Match);
 
                         Console.WriteLine();
                         Console.Write("Origem: ");

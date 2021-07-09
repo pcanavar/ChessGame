@@ -1,4 +1,5 @@
 ﻿using board;
+using System.Collections.Generic;
 
 namespace Chess
 {
@@ -8,6 +9,8 @@ namespace Chess
         public int Turn { get; private set; }
         public Colour CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
+        private HashSet<Pieces> AllPieces;
+        private HashSet<Pieces> CapturedPieces;
 
         public ChessMatch()
         {
@@ -15,23 +18,30 @@ namespace Chess
             Turn = 1;
             CurrentPlayer = Colour.White;
             Finished = false;
+            AllPieces = new HashSet<Pieces>();
+            CapturedPieces = new HashSet<Pieces>();
             PlacePieces();
+        }
+        public void PlaceNewPiece(char column, int line, Pieces piece)
+        {
+            Board.PlacePiece(piece, new ChessPosition(column, line).ToPosition());
+            AllPieces.Add(piece);
         }
         private void PlacePieces()
         {
-            Board.PlacePiece(new Rook(Board, Colour.White), new ChessPosition('c', 1).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.White), new ChessPosition('c', 2).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.White), new ChessPosition('d', 2).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.White), new ChessPosition('e', 1).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.White), new ChessPosition('e', 2).ToPosition());
-            Board.PlacePiece(new King(Board, Colour.White), new ChessPosition('d', 1).ToPosition());
-
-            Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('c', 7).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('c', 8).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('d', 7).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('e', 7).ToPosition());
-            Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('e', 8).ToPosition());
-            Board.PlacePiece(new King(Board, Colour.Black), new ChessPosition('d', 8).ToPosition());
+            PlaceNewPiece('c', 1, new Rook(Board, Colour.White));
+            PlaceNewPiece('c', 2, new Rook(Board, Colour.White));
+            PlaceNewPiece('d', 2, new Rook(Board, Colour.White));
+            PlaceNewPiece('e', 1, new Rook(Board, Colour.White));
+            PlaceNewPiece('e', 2, new Rook(Board, Colour.White));
+            PlaceNewPiece('d', 1, new King(Board, Colour.White));
+            
+            PlaceNewPiece('c', 7, new Rook(Board, Colour.Black));
+            PlaceNewPiece('c', 8, new Rook(Board, Colour.Black));
+            PlaceNewPiece('d', 7, new Rook(Board, Colour.Black));
+            PlaceNewPiece('e', 7, new Rook(Board, Colour.Black));
+            PlaceNewPiece('e', 8, new Rook(Board, Colour.Black));
+            PlaceNewPiece('d', 8, new King(Board, Colour.Black));
         }
         public void NewMovement(Position origin, Position destination)
         {
@@ -39,6 +49,7 @@ namespace Chess
             p.IncreaseMovementNo();
             Pieces captured = Board.RemovePiece(destination);
             Board.PlacePiece(p, destination);
+            if (captured != null) { CapturedPieces.Add(captured); }
         }
         public void ValidatePositionOrigin(Position pos)
         {
@@ -72,6 +83,26 @@ namespace Chess
         {
             if (CurrentPlayer == Colour.White) { CurrentPlayer = Colour.Black; }
             else { CurrentPlayer = Colour.White; }
+        }
+
+        public HashSet<Pieces> GetCapturedPieces(Colour colour)
+        {
+            HashSet<Pieces> aux = new HashSet<Pieces>();
+            foreach (Pieces piece in CapturedPieces)
+            {
+                if (piece.Colour == colour) { aux.Add(piece); }
+            }
+            return aux;
+        }
+        public HashSet<Pieces> GetPiecesInGame(Colour colour)
+        {
+            HashSet<Pieces> aux = new HashSet<Pieces>();
+            foreach (Pieces piece in AllPieces)
+            {
+                if (piece.Colour == colour) { aux.Add(piece); }
+            }
+            aux.ExceptWith(GetCapturedPieces(colour));
+            return aux;
         }
 
     }
