@@ -61,7 +61,7 @@ namespace Chess
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Colour != Colour) { break; }
-                pos.DefineValues(Position.Line - 1, pos.Column - 1);
+                pos.DefineValues(pos.Line - 1, pos.Column - 1);
             }
             //NE
             pos.DefineValues(Position.Line - 1, Position.Column + 1);
@@ -69,7 +69,7 @@ namespace Chess
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Colour != Colour) { break; }
-                pos.DefineValues(Position.Line - 1, pos.Column + 1);
+                pos.DefineValues(pos.Line - 1, pos.Column + 1);
             }
             //SE
             pos.DefineValues(Position.Line + 1, Position.Column + 1);
@@ -77,7 +77,7 @@ namespace Chess
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Colour != Colour) { break; }
-                pos.DefineValues(Position.Line + 1, pos.Column + 1);
+                pos.DefineValues(pos.Line + 1, pos.Column + 1);
             }
             //SW
             pos.DefineValues(Position.Line + 1, Position.Column - 1);
@@ -85,7 +85,7 @@ namespace Chess
             {
                 mat[pos.Line, pos.Column] = true;
                 if (Board.Piece(pos) != null && Board.Piece(pos).Colour != Colour) { break; }
-                pos.DefineValues(Position.Line + 1, pos.Column - 1);
+                pos.DefineValues(pos.Line + 1, pos.Column - 1);
             }
 
 
