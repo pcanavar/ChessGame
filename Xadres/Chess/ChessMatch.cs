@@ -5,8 +5,8 @@ namespace Chess
     class ChessMatch
     {
         public Board Board { get; private set; }
-        private int Turn;
-        private Colour CurrentPlayer;
+        public int Turn { get; private set; }
+        public Colour CurrentPlayer { get; private set; }
         public bool Finished { get; private set; }
 
         public ChessMatch()
@@ -32,9 +32,6 @@ namespace Chess
             Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('e', 7).ToPosition());
             Board.PlacePiece(new Rook(Board, Colour.Black), new ChessPosition('e', 8).ToPosition());
             Board.PlacePiece(new King(Board, Colour.Black), new ChessPosition('d', 8).ToPosition());
-
-
-
         }
         public void NewMovement(Position origin, Position destination)
         {
@@ -42,6 +39,39 @@ namespace Chess
             p.IncreaseMovementNo();
             Pieces captured = Board.RemovePiece(destination);
             Board.PlacePiece(p, destination);
+        }
+        public void ValidatePositionOrigin(Position pos)
+        {
+            if (Board.Piece(pos) == null)
+            {
+                throw new BoardException("No pieces at this position !");
+            }
+            if (CurrentPlayer != Board.Piece(pos).Colour)
+            {
+                throw new BoardException("Please select a " + CurrentPlayer + " piece");
+            }
+            if (!Board.Piece(pos).IsPossibleMovementsAvailable())
+            {
+                throw new BoardException("This Piece has no movements");
+            }
+        }
+        public void ValidatePositionDestination(Position origin, Position destination)
+        {
+            if (!Board.Piece(origin).IsAbleToMoveTo(destination))
+            {
+                throw new BoardException("This piece cannot move to the destination selected");
+            }
+        }
+        public void RunPlay(Position origin, Position destination)
+        {
+            NewMovement(origin, destination);
+            Turn++;
+            ChangePlayer();
+        }
+        private void ChangePlayer()
+        {
+            if (CurrentPlayer == Colour.White) { CurrentPlayer = Colour.Black; }
+            else { CurrentPlayer = Colour.White; }
         }
 
     }
