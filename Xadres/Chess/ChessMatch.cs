@@ -157,7 +157,7 @@ namespace Chess
                 if (origin.Column != destination.Column && captured == null)
                 {
                     Position posP;
-                    if (p.Colour == Colour.White) { posP = new Position(destination.Line+1, destination.Column); }
+                    if (p.Colour == Colour.White) { posP = new Position(destination.Line + 1, destination.Column); }
                     else { posP = new Position(destination.Line - 1, destination.Column); }
                     captured = Board.RemovePiece(posP);
                     CapturedPieces.Add(captured);
@@ -196,10 +196,21 @@ namespace Chess
                 UndoMovement(origin, destination, captured);
                 throw new BoardException("You cannot place yourself in check");
             }
+            Pieces p = Board.Piece(destination);
+            // Promotion
+            if (p is Pawn)
+            {
+                if ((p.Colour == Colour.White && destination.Line == 0) || (p.Colour == Colour.Black && destination.Line == 7))
+                {
+                    p = Board.RemovePiece(destination);
+                    AllPieces.Remove(p);
+                    Pieces queen = new Queen(Board, p.Colour);
+                    Board.PlacePiece(queen, destination);
+                }
+            }
             if (IsCheckStatus(EnemyColour(CurrentPlayer))) { Check = true; } else { Check = false; }
             if (IsCheckMate(EnemyColour(CurrentPlayer))) { Finished = true; }
             else { Turn++; ChangePlayer(); }
-            Pieces p = Board.Piece(destination);
 
             //#EnPassant
             if (p is Pawn && (destination.Line == origin.Line - 2 || destination.Line == origin.Line + 2)) { VulnerableEnPassant = p; }

@@ -8,11 +8,11 @@ namespace Xadres
     {
         static void Main(string[] args)
         {
-            try
-            {
-                ChessMatch Match = new ChessMatch();
+            ChessMatch Match = new ChessMatch();
 
-                while (!Match.Finished)
+            while (!Match.Finished)
+            {
+                try
                 {
                     Console.Clear();
                     Screen.PrintMatch(Match);
@@ -32,19 +32,18 @@ namespace Xadres
 
                     Match.RunPlay(origin, destination);
                 }
+                catch (BoardException bEx)
+                {
+                    Console.WriteLine(bEx.Message);
+                    Console.ReadLine();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unknown Exception: " + e.Message);
+                    Console.ReadLine();
+                }
                 Console.Clear();
                 Screen.PrintMatch(Match);
-                Console.ReadLine();
-            }
-            catch (BoardException bEx)
-            {
-                Console.WriteLine(bEx.Message);
-                Console.ReadLine();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Unknown Exception: " + e.Message);
-                Console.ReadLine();
             }
         }
     }
