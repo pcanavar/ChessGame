@@ -42,9 +42,10 @@ namespace ChessGame
                     Console.WriteLine("Unknown Exception: " + e.Message);
                     Console.ReadLine();
                 }
-                Console.Clear();
-                Screen.PrintMatch(Match);
             }
+            Console.Clear();
+            Screen.PrintMatch(Match);
+            Console.ReadLine();
         }
     }
 }
