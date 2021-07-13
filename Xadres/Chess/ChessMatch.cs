@@ -204,8 +204,38 @@ namespace Chess
                 {
                     p = Board.RemovePiece(destination);
                     AllPieces.Remove(p);
-                    Pieces queen = new Queen(Board, p.Colour);
-                    Board.PlacePiece(queen, destination);
+                    Pieces promotionedPiece = null;
+
+                    while (promotionedPiece == null)
+                    {
+                        System.Console.Clear();
+                        System.Console.WriteLine("1 - Queen");
+                        System.Console.WriteLine("2 - Rook");
+                        System.Console.WriteLine("3 - Bishop");
+                        System.Console.WriteLine("4 - Knight");
+                        System.Console.WriteLine("");
+                        System.Console.Write("Please choose the option for Pawn promotion: ");
+                        int promoindex = int.Parse(System.Console.ReadLine());
+                        switch (promoindex)
+                        {
+                            case 1:
+                                promotionedPiece = new Queen(Board, p.Colour);
+                                break;
+                            case 2:
+                                promotionedPiece = new Rook(Board, p.Colour);
+                                break;
+                            case 3:
+                                promotionedPiece = new Bishop(Board, p.Colour);
+                                break;
+                            case 4:
+                                promotionedPiece = new Knight(Board, p.Colour);
+                                break;
+                            default:
+                                promotionedPiece = null;
+                                break;
+                        }
+                    }
+                    Board.PlacePiece(promotionedPiece, destination);
                 }
             }
             if (IsCheckStatus(EnemyColour(CurrentPlayer))) { Check = true; } else { Check = false; }
