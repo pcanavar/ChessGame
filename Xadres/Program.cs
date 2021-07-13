@@ -2,7 +2,7 @@
 using board;
 using Chess;
 
-namespace Xadres
+namespace ChessGame
 {
     class Program
     {

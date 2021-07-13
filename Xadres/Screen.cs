@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using board;
 using Chess;
 
-namespace Xadres
+namespace ChessGame
 {
     class Screen
     {
